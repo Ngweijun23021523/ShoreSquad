@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShoreSquad - Rally your crew, track weather, and hit the next beach cleanup with our dope map app!">
+    <meta name="theme-color" content="#0066CC">
+    <title>ShoreSquad - Beach Cleanup Community</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header role="banner" class="header">
+        <nav role="navigation" class="navbar" aria-label="Main Navigation">
+            <div class="navbar-container">
+                <div class="logo">
+                    <h1>ShoreSquad</h1>
+                    <p class="tagline">Rally Your Crew</p>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#map" class="nav-link">Map</a></li>
+                    <li><a href="#weather" class="nav-link">Weather</a></li>
+                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main role="main" id="main-content">
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Hero section">
+            <div class="hero-content">
+                <h2>Clean Beaches, Connect Communities</h2>
+                <p>Find cleanup events near you, check the forecast, and make a real impact.</p>
+                <button class="cta-button" id="cta-button">Get Started</button>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section id="map" class="map-section" aria-labelledby="map-heading">
+            <h2 id="map-heading">Find Cleanup Events Near You</h2>
+            <div id="map-container" class="map-container" role="img" aria-label="Interactive map of beach cleanup events">
+                <p class="placeholder">Interactive map will load here</p>
+            </div>
+        </section>
+
+        <!-- Weather Section -->
+        <section id="weather" class="weather-section" aria-labelledby="weather-heading">
+            <h2 id="weather-heading">Check the Forecast</h2>
+            <div id="weather-container" class="weather-container" role="region" aria-live="polite" aria-label="Weather information">
+                <p class="placeholder">Weather data will appear here</p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="events-section" aria-labelledby="events-heading">
+            <h2 id="events-heading">Upcoming Cleanups</h2>
+            <div id="events-container" class="events-container">
+                <article class="event-card">
+                    <h3>Bondi Beach Cleanup</h3>
+                    <p class="event-date">Saturday, Dec 7, 9:00 AM</p>
+                    <p class="event-desc">Join us for a beach cleanup and connect with the community!</p>
+                    <button class="event-button" aria-label="Join Bondi Beach Cleanup event">Join Crew</button>
+                </article>
+                <article class="event-card">
+                    <h3>Manly Beach Drive</h3>
+                    <p class="event-date">Sunday, Dec 8, 10:00 AM</p>
+                    <p class="event-desc">Help us keep Manly clean and pristine.</p>
+                    <button class="event-button" aria-label="Join Manly Beach Drive event">Join Crew</button>
+                </article>
+                <article class="event-card">
+                    <h3>Coogee Coastal Cleanup</h3>
+                    <p class="event-date">Saturday, Dec 14, 8:00 AM</p>
+                    <p class="event-desc">Early bird special! Help protect our marine ecosystem.</p>
+                    <button class="event-button" aria-label="Join Coogee Coastal Cleanup event">Join Crew</button>
+                </article>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section" aria-labelledby="about-heading">
+            <h2 id="about-heading">About ShoreSquad</h2>
+            <div class="about-content">
+                <p>ShoreSquad mobilizes young people to clean beaches using weather tracking and interactive maps. We make eco-action fun, connected, and impactful.</p>
+                <ul class="features">
+                    <li>📍 Find nearby beach cleanup events</li>
+                    <li>🌤️ Real-time weather forecasts</li>
+                    <li>👥 Connect with your eco-crew</li>
+                    <li>🌍 Track your impact</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 ShoreSquad. Making beaches cleaner, one crew at a time.</p>
+            <div class="footer-links">
+                <a href="#privacy" class="footer-link">Privacy</a>
+                <a href="#terms" class="footer-link">Terms</a>
+                <a href="#contact" class="footer-link">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

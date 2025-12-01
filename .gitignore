@@ -1,0 +1,65 @@
+# ============================================
+# Node.js & npm
+# ============================================
+node_modules/
+npm-debug.log
+npm-debug.log*
+.npm
+.eslintcache
+package-lock.json
+yarn.lock
+
+# ============================================
+# Development & IDE
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# ============================================
+# Build & Distribution
+# ============================================
+dist/
+build/
+.next/
+out/
+*.min.js
+*.min.css
+
+# ============================================
+# Testing & Coverage
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+
+# ============================================
+# OS Files
+# ============================================
+Thumbs.db
+.AppleDouble
+.LSOverride
+._*
+*.log
+
+# ============================================
+# Temporary Files
+# ============================================
+*.tmp
+*.temp
+*~
+.cache/
+
+# ============================================
+# Optional: Sensitive Data
+# ============================================
+.secrets
+credentials.json
+private_key
