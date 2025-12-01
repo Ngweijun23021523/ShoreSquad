@@ -147,32 +147,11 @@ class MapModule {
     init() {
         if (!this.mapContainer || this.initialized) return;
 
-        console.log('🗺️  Initializing interactive map...');
+        console.log('🗺️  Map initialized with Google Maps embed');
         
-        // Placeholder for Leaflet.js or Google Maps API integration
-        this.createPlaceholderMap();
+        // Google Maps iframe is already embedded in HTML
         this.initialized = true;
         appState.mapInitialized = true;
-    }
-
-    createPlaceholderMap() {
-        this.mapContainer.innerHTML = `
-            <div style="
-                width: 100%;
-                height: 400px;
-                background: linear-gradient(135deg, #e8f4f8 0%, #b3e5fc 100%);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.1rem;
-                color: #0066CC;
-                border-radius: 8px;
-            ">
-                🗺️ Interactive Map Coming Soon
-                <br>
-                <small style="margin-top: 10px; color: #0099CC;">Integrate Leaflet.js or Google Maps API</small>
-            </div>
-        `;
     }
 
     /**
@@ -186,61 +165,192 @@ class MapModule {
 }
 
 // ============================================
-// Weather Module - API Integration Placeholder
+// Weather Module - NEA API Integration
 // ============================================
 
 class WeatherModule {
     constructor() {
         this.weatherContainer = safeQuery('#weather-container');
         this.loaded = false;
-        this.baseURL = 'https://api.open-meteo.com/v1/forecast';
+        this.baseURL = 'https://api.data.gov.sg/v1/environment';
     }
 
     init() {
         if (!this.weatherContainer || this.loaded) return;
 
-        console.log('🌤️  Initializing weather module...');
-        this.loadPlaceholderWeather();
+        console.log('🌤️  Initializing weather module with NEA API...');
+        this.fetchNEAWeather();
         this.loaded = true;
         appState.weatherLoaded = true;
     }
 
     /**
-     * Placeholder weather display
+     * Fetch 4-day forecast from NEA API
      */
-    loadPlaceholderWeather() {
-        const weatherHTML = `
-            <div class="weather-card" style="padding: 20px; background: white; border-radius: 8px; text-align: center;">
-                <h3>Sydney, NSW</h3>
-                <p style="font-size: 2em; margin: 10px 0;">☀️ 24°C</p>
-                <p><strong>Conditions:</strong> Sunny</p>
-                <p><strong>Wind:</strong> 15 km/h</p>
-                <p><strong>Humidity:</strong> 65%</p>
-                <small style="color: #999;">Example weather data - integrate real API</small>
-            </div>
-        `;
-        this.weatherContainer.innerHTML = weatherHTML;
+    async fetchNEAWeather() {
+        try {
+            // Fetch 4-day forecast
+            const forecastResponse = await fetch(
+                `${this.baseURL}/4-day-weather-forecast`,
+                { 
+                    signal: AbortSignal.timeout(8000),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            
+            if (!forecastResponse.ok) {
+                console.warn('NEA forecast API responded with status:', forecastResponse.status);
+                throw new Error('NEA forecast API failed');
+            }
+
+            const forecastData = await forecastResponse.json();
+            console.log('NEA Forecast Data:', forecastData);
+            
+            if (forecastData.items && forecastData.items.length > 0) {
+                this.displayWeather(forecastData);
+            } else {
+                throw new Error('No forecast data received');
+            }
+        } catch (error) {
+            console.error('Weather fetch error:', error);
+            this.displayPlaceholderWeather();
+        }
     }
 
     /**
-     * Fetch real weather data from Open-Meteo API
-     * @param {number} latitude - Latitude
-     * @param {number} longitude - Longitude
-     * @returns {Promise<Object>} Weather data
+     * Display formatted 4-day weather forecast
      */
-    async fetchWeather(latitude, longitude) {
-        try {
-            const response = await fetch(
-                `${this.baseURL}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&timezone=auto`,
-                { signal: AbortSignal.timeout(5000) } // 5s timeout
-            );
+    displayWeather(forecastData) {
+        let forecastHTML = '<div class="weather-forecast">';
+
+        // Display 4-day forecast
+        if (forecastData.items && forecastData.items.length > 0) {
+            const forecasts = forecastData.items[0].forecasts || [];
             
-            if (!response.ok) throw new Error('Weather API failed');
-            return await response.json();
-        } catch (error) {
-            console.error('Weather fetch error:', error);
-            return null;
+            forecasts.forEach((forecast, index) => {
+                if (index < 4) { // Show only 4 days
+                    const date = new Date(forecast.date);
+                    const dayName = date.toLocaleDateString('en-SG', { weekday: 'short' });
+                    const dateStr = date.toLocaleDateString('en-SG');
+                    
+                    forecastHTML += `
+                        <div class="weather-card">
+                            <div class="weather-day">${dayName}</div>
+                            <div class="weather-date">${dateStr}</div>
+                            <div class="weather-condition">${this.formatCondition(forecast.forecast)}</div>
+                            <div class="weather-temp">
+                                <span class="temp-high">${forecast.temperature.high}°C</span>
+                                <span class="temp-low">${forecast.temperature.low}°C</span>
+                            </div>
+                            <div class="weather-details">
+                                <p class="humidity">💧 ${forecast.relative_humidity.high}% humidity</p>
+                                <p class="wind">💨 Wind: ${forecast.wind.speed.high} km/h</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Add header with data source
+            forecastHTML = `
+                <div class="weather-header">
+                    <h3>4-Day Weather Forecast - Singapore</h3>
+                    <p class="data-source">Data: National Environment Agency (NEA)</p>
+                </div>
+            ` + forecastHTML;
         }
+
+        forecastHTML += '</div>';
+        this.weatherContainer.innerHTML = forecastHTML;
+    }
+
+    /**
+     * Format weather condition text
+     */
+    formatCondition(condition) {
+        const conditionMap = {
+            'Thundery Showers': '⛈️ Thundery Showers',
+            'Showers': '🌧️ Showers',
+            'Cloudy': '☁️ Cloudy',
+            'Partly Cloudy': '⛅ Partly Cloudy',
+            'Fair': '☀️ Fair',
+            'Sunny': '☀️ Sunny',
+            'Rainy': '🌧️ Rainy',
+            'Windy': '💨 Windy'
+        };
+        return conditionMap[condition] || `${condition}`;
+    }
+
+    /**
+     * Display placeholder weather when API fails
+     */
+    displayPlaceholderWeather() {
+        const weatherHTML = `
+            <div class="weather-forecast">
+                <div class="weather-header">
+                    <h3>4-Day Weather Forecast - Singapore</h3>
+                    <p class="data-source">Data: National Environment Agency (NEA)</p>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-day">Mon</div>
+                    <div class="weather-date">01 Dec 2025</div>
+                    <div class="weather-condition">☀️ Fair</div>
+                    <div class="weather-temp">
+                        <span class="temp-high">28°C</span>
+                        <span class="temp-low">24°C</span>
+                    </div>
+                    <div class="weather-details">
+                        <p class="humidity">💧 70% humidity</p>
+                        <p class="wind">💨 Wind: 12 km/h</p>
+                    </div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-day">Tue</div>
+                    <div class="weather-date">02 Dec 2025</div>
+                    <div class="weather-condition">⛅ Partly Cloudy</div>
+                    <div class="weather-temp">
+                        <span class="temp-high">29°C</span>
+                        <span class="temp-low">24°C</span>
+                    </div>
+                    <div class="weather-details">
+                        <p class="humidity">💧 75% humidity</p>
+                        <p class="wind">💨 Wind: 10 km/h</p>
+                    </div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-day">Wed</div>
+                    <div class="weather-date">03 Dec 2025</div>
+                    <div class="weather-condition">🌧️ Showers</div>
+                    <div class="weather-temp">
+                        <span class="temp-high">26°C</span>
+                        <span class="temp-low">23°C</span>
+                    </div>
+                    <div class="weather-details">
+                        <p class="humidity">💧 85% humidity</p>
+                        <p class="wind">💨 Wind: 15 km/h</p>
+                    </div>
+                </div>
+                <div class="weather-card">
+                    <div class="weather-day">Thu</div>
+                    <div class="weather-date">04 Dec 2025</div>
+                    <div class="weather-condition">⛅ Partly Cloudy</div>
+                    <div class="weather-temp">
+                        <span class="temp-high">28°C</span>
+                        <span class="temp-low">23°C</span>
+                    </div>
+                    <div class="weather-details">
+                        <p class="humidity">💧 72% humidity</p>
+                        <p class="wind">💨 Wind: 11 km/h</p>
+                    </div>
+                </div>
+                <p style="grid-column: 1 / -1; text-align: center; color: var(--text-light); margin-top: var(--spacing-md);">
+                    <small>Unable to load real-time data. Showing example forecast.</small>
+                </p>
+            </div>
+        `;
+        this.weatherContainer.innerHTML = weatherHTML;
     }
 }
 
@@ -298,13 +408,13 @@ class EventsModule {
         const notification = document.createElement('div');
         notification.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
+            top: 1.25rem;
+            right: 1.25rem;
+            padding: 0.9375rem 1.25rem;
             background-color: ${type === 'success' ? '#2ECC71' : '#0066CC'};
             color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.15);
             z-index: 9999;
             animation: slideIn 0.3s ease-in-out;
         `;
@@ -440,11 +550,11 @@ class ShoreSquadApp {
             skipLink.textContent = 'Skip to main content';
             skipLink.style.cssText = `
                 position: absolute;
-                top: -40px;
+                top: -2.5rem;
                 left: 0;
                 background: #000;
                 color: white;
-                padding: 8px;
+                padding: 0.5rem;
                 text-decoration: none;
                 z-index: 100;
             `;
@@ -452,7 +562,7 @@ class ShoreSquadApp {
                 skipLink.style.top = '0';
             });
             skipLink.addEventListener('blur', () => {
-                skipLink.style.top = '-40px';
+                skipLink.style.top = '-2.5rem';
             });
             document.body.prepend(skipLink);
         }
