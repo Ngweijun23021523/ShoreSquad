@@ -4,128 +4,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ShoreSquad - Rally your crew, track weather, and hit the next beach cleanup with our dope map app!">
-    <meta name="theme-color" content="#0066CC">
-    <title>ShoreSquad - Beach Cleanup Community</title>
+    <meta name="theme-color" content="#0077BE">
+    <title>ShoreSquad - Beach Cleanup Crew</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <!-- Header/Navigation -->
-    <header role="banner" class="header">
-        <nav role="navigation" class="navbar" aria-label="Main Navigation">
-            <div class="navbar-container">
-                <div class="logo">
-                    <h1>ShoreSquad</h1>
-                    <p class="tagline">Rally Your Crew</p>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#map" class="nav-link">Map</a></li>
-                    <li><a href="#weather" class="nav-link">Weather</a></li>
-                    <li><a href="#events" class="nav-link">Events</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                </ul>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-water" aria-hidden="true"></i>
+                <h1>ShoreSquad</h1>
             </div>
-        </nav>
-    </header>
+            <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="#home" role="menuitem">Home</a></li>
+                <li role="none"><a href="#events" role="menuitem">Events</a></li>
+                <li role="none"><a href="#map" role="menuitem">Map</a></li>
+                <li role="none"><a href="#weather" role="menuitem">Weather</a></li>
+                <li role="none"><a href="#crew" role="menuitem">My Crew</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- Main Content -->
-    <main role="main" id="main-content">
-        <!-- Hero Section -->
-        <section class="hero" aria-label="Hero section">
-            <div class="hero-content">
-                <h2>🌊 Clean Beaches, Connect Communities</h2>
-                <p>Find cleanup events near you, check the forecast, and make a real impact. Confirm or what? 🏖️</p>
-                <button class="cta-button" id="cta-button">Get Started Lah! →</button>
+    <!-- Pristine Beach Banner -->
+    <section class="beach-banner">
+        <div class="beach-banner-content">
+            <div class="beach-banner-waves">
+                <div class="wave wave-1"></div>
+                <div class="wave wave-2"></div>
+                <div class="wave wave-3"></div>
             </div>
-        </section>
-
-        <!-- Map Section -->
-        <section id="map" class="map-section" aria-labelledby="map-heading">
-            <h2 id="map-heading">🗺️ Find Cleanup Events Near You</h2>
-            <div id="map-container" class="map-container" role="img" aria-label="Interactive map of beach cleanup events">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8219483097446!2d103.95429791111111!3d1.381497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da180a9db2b3dd%3A0x1234567890abcdef!2sStreet%20View%20Asia%2C%20Pasir%20Ris!5e0!3m2!1sen!2ssg!4v1733054400000!5m2!1sen!2ssg"
-                    width="100%"
-                    height="500"
-                    style="border:0; border-radius: 8px;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Next Cleanup Location - Pasir Ris">
-                </iframe>
-                <div class="map-info">
-                    <h3>📍 Next Cleanup: Pasir Ris</h3>
-                    <p><strong>Location:</strong> Street View Asia, Pasir Ris</p>
-                    <p><strong>Coordinates:</strong> 1.381497, 103.955574</p>
-                    <p><strong>Mission:</strong> Join us at Pasir Ris for the next beach cleanup event. Rally your crew and make a real difference! 🌊</p>
-                </div>
+            <div class="beach-banner-text">
+                <h2>🏖️ Pristine Beaches, Cleaner Future</h2>
+                <p>Join us in preserving Singapore's beautiful coastlines</p>
             </div>
-        </section>
-
-        <!-- Weather Section -->
-        <section id="weather" class="weather-section" aria-labelledby="weather-heading">
-            <h2 id="weather-heading">🌤️ Check the Forecast</h2>
-            <div id="weather-container" class="weather-container" role="region" aria-live="polite" aria-label="Weather information">
-                <p class="placeholder">Weather data will appear here</p>
-            </div>
-        </section>
-
-        <!-- Events Section -->
-        <section id="events" class="events-section" aria-labelledby="events-heading">
-            <h2 id="events-heading">🌊 Upcoming Cleanups - Join the Crew Lah!</h2>
-            <div id="events-container" class="events-container">
-                <article class="event-card">
-                    <h3>🏖️ Bondi Beach Cleanup</h3>
-                    <p class="event-date">Saturday, Dec 7, 9:00 AM</p>
-                    <p class="event-desc">Join us for a beach cleanup and connect with the community!</p>
-                    <button class="event-button" aria-label="Join Bondi Beach Cleanup event">Join Crew 🤝</button>
-                </article>
-                <article class="event-card">
-                    <h3>🏝️ Manly Beach Drive</h3>
-                    <p class="event-date">Sunday, Dec 8, 10:00 AM</p>
-                    <p class="event-desc">Help us keep Manly clean and pristine. Don't bluff, chup chup!</p>
-                    <button class="event-button" aria-label="Join Manly Beach Drive event">Join Crew 🤝</button>
-                </article>
-                <article class="event-card">
-                    <h3>🌿 Coogee Coastal Cleanup</h3>
-                    <p class="event-date">Saturday, Dec 14, 8:00 AM</p>
-                    <p class="event-desc">Early bird special! Help protect our marine ecosystem, confirm or what?</p>
-                    <button class="event-button" aria-label="Join Coogee Coastal Cleanup event">Join Crew 🤝</button>
-                </article>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about-section" aria-labelledby="about-heading">
-            <h2 id="about-heading">About ShoreSquad 🌊</h2>
-            <div class="about-content">
-                <p>ShoreSquad mobilizes Gen-Z to clean beaches using real-time weather tracking and interactive maps. We make eco-action fun, connected, and impactful. <strong>Rally your crew. Clean the beaches. Save the world. Lah!</strong></p>
-                <ul class="features">
-                    <li>📍 Find nearby beach cleanup events (confirm or what?)</li>
-                    <li>🌤️ Real-time weather forecasts from NEA</li>
-                    <li>👥 Connect with your eco-crew via live chat</li>
-                    <li>🌍 Track your impact and join the movement</li>
-                    <li>🌊 Beachy vibes with Gen-Z energy</li>
-                </ul>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer role="contentinfo" class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 ShoreSquad. Making beaches cleaner, one crew at a time.</p>
-            <div class="footer-links">
-                <a href="#privacy" class="footer-link">Privacy</a>
-                <a href="#terms" class="footer-link">Terms</a>
-                <a href="#contact" class="footer-link">Contact</a>
+            <div class="beach-banner-elements">
+                <div class="palm-tree">🌴</div>
+                <div class="seashell">🐚</div>
+                <div class="sun">☀️</div>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero" role="banner">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Rally Your Crew for Beach Cleanups!</h2>
+                <p class="hero-subtitle">Track weather, find locations, and make eco-action fun with your squad</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="join-cleanup">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        Join a Cleanup
+                    </button>
+                    <button class="btn btn-secondary" id="create-event">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        Create Event
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Floating cards removed to prevent button overlap -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" role="region" aria-label="Impact statistics">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                    <h3 class="stat-number" data-target="1135">0</h3>
+                    <p>Kilograms Collected</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <h3 class="stat-number" data-target="45">0</h3>
+                    <p>Beaches Cleaned</p>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <h3 class="stat-number" data-target="350">0</h3>
+                    <p>Squad Members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events" role="region" aria-label="Upcoming cleanup events">
+        <div class="container">
+            <h2 class="section-title">Upcoming Cleanups</h2>
+            <div class="events-grid" id="events-grid">
+                <!-- Events will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map" class="map-section" role="region" aria-label="Cleanup locations map">
+        <div class="container">
+            <h2 class="section-title">Find Your Beach</h2>
+            <div class="map-container">
+                <iframe 
+                    id="map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.6234567890123!2d103.955574!3d1.381497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMjInNTMuNCJOIDEwM8KwNTcnMjAuMSJF!5e0!3m2!1sen!2ssg!4v1000000000000!5m2!1sen!2ssg&markers=color:orange%7Clabel:Next%20Cleanup%7C1.381497,103.955574"
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Pasir Ris Beach Cleanup Location">
+                </iframe>
+                <div class="map-info">
+                    <div class="next-cleanup-badge">
+                        <i class="fas fa-map-pin" aria-hidden="true"></i>
+                        <span>Next Cleanup: Pasir Ris Beach</span>
+                    </div>
+                </div>
+                <div class="map-controls">
+                    <button class="btn btn-map" id="locate-me" aria-label="Find my location">
+                        <i class="fas fa-location-arrow"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weather Section -->
+    <section class="weather-section" id="weather">
+      <div class="container">
+        <h2 class="section-title">Weather & Conditions</h2>
+        <div class="weather-container">
+          <div class="weather-today" id="weather-today">
+            <div class="weather-today-header">
+              <span class="weather-today-icon" aria-label="Weather icon">☀️</span>
+              <span class="weather-today-temp" id="weather-today-temp">--°C</span>
+            </div>
+            <div class="weather-today-condition" id="weather-today-condition">Loading...</div>
+            <div class="weather-details" id="weather-today-details"></div>
+          </div>
+          <div class="weather-forecast">
+            <div class="forecast-header">
+              <h3><span class="forecast-icon" aria-label="Forecast icon">☀️</span> 4-Day Forecast</h3>
+            </div>
+            <div class="forecast-grid" id="weather-forecast-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Crew Section -->
+    <section id="crew" class="crew" role="region" aria-label="Your cleanup crew">
+        <div class="container">
+            <h2 class="section-title">Your Squad</h2>
+            <div class="crew-grid" id="crew-grid">
+                <!-- Crew members will be populated by JavaScript -->
+            </div>
+            <button class="btn btn-primary btn-full" id="invite-friends">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                Invite Friends to Your Squad
+            </button>
+        </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+        <a href="#home" class="nav-item active" aria-label="Home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#events" class="nav-item" aria-label="Events">
+            <i class="fas fa-calendar"></i>
+            <span>Events</span>
+        </a>
+        <a href="#map" class="nav-item" aria-label="Map">
+            <i class="fas fa-map"></i>
+            <span>Map</span>
+        </a>
+        <a href="#weather" class="nav-item" aria-label="Weather">
+            <i class="fas fa-cloud-sun"></i>
+            <span>Weather</span>
+        </a>
+        <a href="#crew" class="nav-item" aria-label="Crew">
+            <i class="fas fa-users"></i>
+            <span>Squad</span>
+        </a>
+    </nav>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+        <div class="loading-spinner"></div>
+        <p>Loading ShoreSquad...</p>
+    </div>
 
     <!-- Scripts -->
     <script src="js/app.js"></script>
